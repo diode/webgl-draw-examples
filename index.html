@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+    <!-- can be repalced with cdn link -->
+    <script type="text/javascript" src="lib/babel.min.js"></script>
+
+    <!-- load main.js as babel target -->
+    <script type="text/babel" src="app/draw-modes/main.js"></script>
+    <!--script type="text/babel" src="app/line-loop-circle/main.js"></script-->
+    <!--script type="text/babel" src="app/line-loop-triangle/main.js"></script-->
+
+    <!-- load css file -->
+    <link rel="stylesheet" href="app/draw-modes/main.css" />
+
+  </head>
+  <body>
+
+    <!-- Target canvas -->
+    <canvas id="expCanvas" width="480" height="480"> </canvas>
+
+    <!-- Vertex shader code -->
+    <script id="vertexShaderCode" type="x-shader/x-vertex">
+      attribute vec2 coordinates;
+      void main(void) {
+        gl_Position = vec4(coordinates, 0.0, 1.0);
+        gl_PointSize = 10.0;
+      }
+    </script>
+
+    <!-- Fragment shader code -->
+    <script id="fragmentShaderCode" type="x-shader/x-fragment">
+      void main(void) {
+        gl_FragColor = vec4(0.8, 0, 0, 1);
+      }
+    </script>
+
+  </body>
+</html>

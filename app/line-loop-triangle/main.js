@@ -9,7 +9,8 @@ class WebGLStarterKit {
     this.fsCode = document.getElementById(fsCode);
 
     /* Get webgl context */
-    this.webGL  = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
+    this.webGL  = this.canvas.getContext('webgl') ||
+                  this.canvas.getContext('experimental-webgl');
   }
 
   start() {
@@ -31,12 +32,14 @@ class WebGLStarterKit {
     let fragmentShaderCode = this.fsCode.text;
 
     // Create shader program
-    let shaderProgram = this.createShaderProgram(webGL, vertexShaderCode, fragmentShaderCode);
+    let shaderProgram = this.createShaderProgram(webGL, vertexShaderCode,
+                                                        fragmentShaderCode);
 
     // Set vertex size (1 , 2, 3, 4)
     // Set shader buffer
     let vertexSize = 2;
-    this.setShaderBuffer(webGL, vertexBuffer, shaderProgram, vertexSize, "coordinates");
+    this.setShaderBuffer(webGL, vertexBuffer, shaderProgram, vertexSize,
+                                                             "coordinates");
 
     // Set up canvas using webgl context
     this.setStage(webGL);
@@ -66,7 +69,8 @@ class WebGLStarterKit {
     // Unbind the buffer
     let vertexBuffer = webGL.createBuffer();
     webGL.bindBuffer(webGL.ARRAY_BUFFER, vertexBuffer);
-    webGL.bufferData(webGL.ARRAY_BUFFER, new Float32Array(vertices), webGL.STATIC_DRAW);
+    webGL.bufferData(webGL.ARRAY_BUFFER, new Float32Array(vertices),
+                                         webGL.STATIC_DRAW);
     webGL.bindBuffer(webGL.ARRAY_BUFFER, null);
     return vertexBuffer;
   }
@@ -102,12 +106,13 @@ class WebGLStarterKit {
   }
 
   /* Associate the shader programs to buffer objects */
-  setShaderBuffer(webGL, vertex_buffer, shaderProgram, vertexSize, coordinatesParam){
+  setShaderBuffer(webGL, vertexBuffer, shaderProgram, vertexSize,
+                                                       coordinatesParam){
     //Bind vertex buffer object
     //Get the attribute location
     //point an attribute to the currently bound VBO
     //Enable the attribute
-    webGL.bindBuffer(webGL.ARRAY_BUFFER, vertex_buffer);
+    webGL.bindBuffer(webGL.ARRAY_BUFFER, vertexBuffer);
     let coord = webGL.getAttribLocation(shaderProgram, coordinatesParam);
     webGL.vertexAttribPointer(coord, vertexSize, webGL.FLOAT, false, 0, 0);
     webGL.enableVertexAttribArray(coord);
@@ -127,5 +132,6 @@ class WebGLStarterKit {
 }
 
 // instatiate WebGLStarterKit
-var starterKit = new WebGLStarterKit("expCanvas", "vertexShaderCode", "fragmentShaderCode");
+var starterKit = new WebGLStarterKit("expCanvas", "vertexShaderCode",
+                                                  "fragmentShaderCode");
 starterKit.start();

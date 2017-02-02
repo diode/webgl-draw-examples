@@ -8,32 +8,42 @@
     <script type="text/javascript" src="lib/babel.min.js"></script>
 
     <!-- load main.js as babel target -->
-    <script type="text/babel" src="app/line-loop-circle/main.js"></script>
+    <script type="text/babel" src="app/rotating-cube/main.js"></script>
     <!--script type="text/babel" src="app/line-loop-circle/main.js"></script-->
     <!--script type="text/babel" src="app/line-loop-triangle/main.js"></script-->
 
     <!-- load css file -->
-    <link rel="stylesheet" href="app/line-loop-circle/main.css" />
+    <link rel="stylesheet" href="app/rotating-cube/main.css" />
 
   </head>
   <body>
-
     <!-- Target canvas -->
     <canvas id="expCanvas" width="480" height="480"> </canvas>
 
-    <!-- Vertex shader code -->
+    <!-- Vertex shader code uniform mat4 scaleMatrix uniform mat4 rotMatrix-->
     <script id="vertexShaderCode" type="x-shader/x-vertex">
-      attribute vec2 coordinates;
+      attribute vec3 coordinates;
+      uniform mat4 projMatrix;
+      uniform mat4 viewMatrix;
+      uniform mat4 rotXMatrix;
+      uniform mat4 rotYMatrix;
+      uniform mat4 rotZMatrix;
+      attribute vec3 color;
+      varying vec3 vColor;
       void main(void) {
-        gl_Position = vec4(coordinates, 0.0, 1.0);
-        gl_PointSize = 10.0;
+        gl_Position = projMatrix * viewMatrix *
+                      (rotXMatrix * (rotYMatrix * (rotZMatrix *
+                                      vec4(coordinates, 1.0))));
+        vColor = color;
       }
     </script>
 
     <!-- Fragment shader code -->
     <script id="fragmentShaderCode" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec3 vColor;
       void main(void) {
-        gl_FragColor = vec4(0.8, 0, 0, 1);
+        gl_FragColor = vec4(vColor, 1.0);
       }
     </script>
 

@@ -1,0 +1,8 @@
+button{
+  margin-bottom: 10px;
+  width: 80px;
+  margin-right: 20px;
+}
+#expCanvas{
+  border: 1px solid #000;
+}

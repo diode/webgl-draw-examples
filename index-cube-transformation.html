@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+    <!-- can be repalced with cdn link -->
+    <script type="text/javascript" src="lib/babel.min.js"></script>
+
+    <!-- load main.js as babel target -->
+    <script type="text/babel" src="app/cube-transformation/main.js"></script>
+    <!--script type="text/babel" src="app/line-loop-circle/main.js"></script-->
+    <!--script type="text/babel" src="app/line-loop-triangle/main.js"></script-->
+
+    <!-- load css file -->
+    <link rel="stylesheet" href="app/cube-transformation/main.css" />
+
+  </head>
+  <body>
+    <p>
+      Click / SHIFT+Click
+    </p>
+
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <button id="rotateX"> Rotate X </button>
+            <button id="rotateY"> Rotate Y </button>
+            <button id="rotateZ"> Rotate Z </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <button id="moveX"> Move X </button>
+            <button id="moveY"> Move Y </button>
+            <button id="moveZ"> Move Z </button>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <button id="scaleX"> Scale X </button>
+            <button id="scaleY"> Scale Y </button>
+            <button id="scaleZ"> Scale Z </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Target canvas -->
+    <canvas id="expCanvas" width="480" height="480"> </canvas>
+
+    <!-- Vertex shader code uniform mat4 scaleMatrix uniform mat4 rotMatrix-->
+    <script id="vertexShaderCode" type="x-shader/x-vertex">
+      attribute vec3 coordinates;
+      uniform mat4 projMatrix;
+      uniform mat4 viewMatrix;
+      uniform mat4 moveMatrix;
+      uniform mat4 rotXMatrix;
+      uniform mat4 rotYMatrix;
+      uniform mat4 rotZMatrix;
+      uniform mat4 scaleMatrix;
+      attribute vec3 color;
+      varying vec3 vColor;
+      void main(void) {
+        gl_Position = projMatrix * viewMatrix *
+                     (moveMatrix * (rotXMatrix * (rotYMatrix * (rotZMatrix *
+                                   (scaleMatrix * vec4(coordinates, 1.0))))));
+        vColor = color;
+      }
+    </script>
+
+    <!-- Fragment shader code -->
+    <script id="fragmentShaderCode" type="x-shader/x-fragment">
+      precision mediump float;
+      varying vec3 vColor;
+      void main(void) {
+        gl_FragColor = vec4(vColor, 1.0);
+      }
+    </script>
+
+  </body>
+</html>

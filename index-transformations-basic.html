@@ -8,15 +8,17 @@
     <script type="text/javascript" src="lib/babel.min.js"></script>
 
     <!-- load main.js as babel target -->
-    <script type="text/babel" src="app/line-loop-circle/main.js"></script>
+    <script type="text/babel" src="app/transformations-basic/main.js"></script>
     <!--script type="text/babel" src="app/line-loop-circle/main.js"></script-->
     <!--script type="text/babel" src="app/line-loop-triangle/main.js"></script-->
 
     <!-- load css file -->
-    <link rel="stylesheet" href="app/line-loop-circle/main.css" />
+    <link rel="stylesheet" href="app/transformations-basic/main.css" />
 
   </head>
   <body>
+
+    <button id="rotate"> Rotate </button>
 
     <!-- Target canvas -->
     <canvas id="expCanvas" width="480" height="480"> </canvas>
@@ -24,8 +26,11 @@
     <!-- Vertex shader code -->
     <script id="vertexShaderCode" type="x-shader/x-vertex">
       attribute vec2 coordinates;
+      uniform mat4 moveMatrix;
+      uniform mat4 scaleMatrix;
+      uniform mat4 rotMatrix;
       void main(void) {
-        gl_Position = vec4(coordinates, 0.0, 1.0);
+        gl_Position = moveMatrix * rotMatrix * (scaleMatrix * vec4(coordinates, 0.0, 1.0));
         gl_PointSize = 10.0;
       }
     </script>
@@ -33,7 +38,7 @@
     <!-- Fragment shader code -->
     <script id="fragmentShaderCode" type="x-shader/x-fragment">
       void main(void) {
-        gl_FragColor = vec4(0.8, 0, 0, 1);
+        gl_FragColor = vec4(0.8, 0, 0, 1.0);
       }
     </script>
 

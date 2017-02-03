@@ -31,6 +31,11 @@ class WebGLStarterKit {
       w2h = canvas.width / canvas.height, // width to height ratio
       lineCount = 60000; // totoal lines to be drawn
 
+    if (!webGL) {
+      document.write("WebGL not supported");
+      return;
+    }
+
     // populate vertices, energy of vertices and colors
     let vertices = [];
     let energy = [];

@@ -18,6 +18,7 @@ class WebGLStarterKit {
     let webGL = this.webGL;
     if (!webGL) {
       document.write("WebGL not supported");
+      return;
     }
 
     // Define array of vertices for a circle

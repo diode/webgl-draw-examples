@@ -18,6 +18,7 @@ class WebGLStarterKit {
     let webGL = this.webGL;
     if (!webGL) {
       document.write("WebGL not supported");
+      return;
     }
 
     let vertices = [
@@ -71,8 +72,8 @@ class WebGLStarterKit {
 
     // Rotation parameters
     this.transform = {
-      rx: 0,
-      ry: 0,
+      rx: -Math.PI/4,
+      ry: Math.PI/4,
       rz: 0,
       rt: "rx" // current axis
     };
@@ -100,7 +101,7 @@ class WebGLStarterKit {
       }
     }
     // update current rotation
-    this.transform[this.transform.rt] += Math.PI / 64;
+    //this.transform[this.transform.rt] += Math.PI / 256;
     // update transformation
     this.setTransformations();
 
